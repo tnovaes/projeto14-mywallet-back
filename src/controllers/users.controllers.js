@@ -34,7 +34,10 @@ export async function signIn(req, res) {
         const token = uuid();
 
         await db.collection("sessions").insertOne({ userId: user._id, token })
-        res.status(200).send(token);
+
+        const userData = {name: user.name, token};
+        
+        res.status(200).send(userData);
 
     } catch (err) {
         res.status(500).send(err.message);
