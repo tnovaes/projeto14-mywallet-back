@@ -1,4 +1,5 @@
 import { db } from "../database/database.connection.js";
+import dayjs from "dayjs";
 
 export async function transaction(req, res) {
     const { value, type, description } = req.body;
@@ -10,7 +11,8 @@ export async function transaction(req, res) {
             userId: session.userId,
             value: value * 100,
             type,
-            description
+            description,
+            date: dayjs().format("DD/MM")
         };
 
         await db.collection("transactions").insertOne(newTransaction);
